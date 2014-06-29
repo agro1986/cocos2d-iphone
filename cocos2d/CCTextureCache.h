@@ -100,6 +100,7 @@
  *
  * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
  * Otherwise it will return a reference of a previously loaded image.
+ * The texture will be created with a content scale of 1
  * The "key" parameter will be used as the "key" for the cache.
  * If "key" is nil, then a new texture will be created each time.
  *
@@ -109,6 +110,30 @@
  *  @return Texture.
  */
 -(CCTexture*) addCGImage: (CGImageRef) image forKey: (NSString *)key;
+
+/**
+ * Returns a Texture2D object given an CGImageRef image.
+ *
+ * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
+ * Otherwise it will return a reference of a previously loaded image.
+ * The "key" parameter will be used as the "key" for the cache.
+ * If "key" is nil, then a new texture will be created each time.
+ *
+ *  @param image        CG image to create texture from.
+ *  @param key          Key used to define texture in cache.
+ *  @param contentScale Content scale of the texture, e.g. 2 for Retina display
+ *
+ *  @return Texture.
+ */
+-(CCTexture*) addCGImage: (CGImageRef) image forKey: (NSString *)key contentScale: (float)contentScale;
+
+/**
+ *  Add a texture to the cache with the specified texture and name.  If name already exists, texture will be overwritten.
+ *
+ *  @param texture     Texture to use.
+ *  @param textureName Texture name to use.
+ */
+-(void) addTexture:(CCTexture *)texture name:(NSString *)textureName;
 
 /**
  *  Returns an already created texture. Returns nil if the texture doesn't exist.

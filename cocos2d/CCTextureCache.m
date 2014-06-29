@@ -343,8 +343,13 @@ static CCTextureCache *sharedTextureCache;
 	return((id)tex.proxy);
 }
 
-
 -(CCTexture*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key
+{
+    return [self addCGImage:imageref forKey:key contentScale:1.0f];
+}
+
+
+-(CCTexture*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key contentScale: (float)contentScale
 {
 	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");
 
@@ -359,7 +364,7 @@ static CCTextureCache *sharedTextureCache;
 			return((id)tex.proxy);
 	}
 
-	tex = [[CCTexture alloc] initWithCGImage:imageref contentScale:1.0];
+	tex = [[CCTexture alloc] initWithCGImage:imageref contentScale:contentScale];
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{
@@ -370,6 +375,16 @@ static CCTextureCache *sharedTextureCache;
 	}
 
 	return((id)tex.proxy);
+}
+
+-(void) addTexture:(CCTexture *)texture name:(NSString *)textureName {
+    if(texture && textureName){
+		dispatch_sync(_dictQueue, ^{
+			[_textures setObject:texture forKey:textureName];
+		});
+	}else{
+		CCLOG(@"cocos2d: Couldn't add texture to CCTextureCache");
+	}
 }
 
 #pragma mark TextureCache - Remove

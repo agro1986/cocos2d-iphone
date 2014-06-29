@@ -74,7 +74,7 @@
  *
  *  @param imageName Image name.
  *
- *  @return The CCSpriteFrame Object.
+ *  @return The CCSpriteFrame Object, or nil if the file doesn't exist
  */
 +(id) frameWithImageNamed:(NSString*)imageName;
 
